@@ -35,6 +35,7 @@
             v-for="item in goodsList"
             :key="item.id"
             v-bind="item"
+            :num="counterMap[item.id]"
           ></goods-card>
           <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
         </van-list>
@@ -72,6 +73,7 @@ export default {
       } else {
         this.type = 'price-up';
       }
+      this.onRefresh();
     },
     // 重新获取goodList
     onRefresh() {
@@ -102,6 +104,8 @@ export default {
   computed: {
     ...mapState({
       goodsList: (state) => state.goodsList,
+      // 获得couterMap，子类需要的id和num
+      counterMap: (state) => state.counterMap,
     }),
   },
 };

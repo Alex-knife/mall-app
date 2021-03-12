@@ -13,8 +13,29 @@ export default new Vuex.Store({
     // 通过二级获取详情信息goodList
     goodsList: [],
     type: null,
+    // id：数量
+    counterMap: {},
   },
   mutations: {
+    storageChange(state, { id, value }) {
+      // 先判断是否存在，无则加1
+      if (state.counterMap[id]) {
+        // 改变存储数值，减到0则删除
+        if (value === -1 && state.counterMap[id] === 1) {
+          Vue.delete(state.counterMap, id);
+        } else {
+          // vue.set(target, key, value)
+          // 更改的数据源  更改的数据 重新赋的值
+          Vue.set(state.counterMap, id, state.counterMap[id] + value);
+        }
+      } else {
+        Vue.set(state.counterMap, id, 1);
+      }
+      localStorage.setItem('goods', JSON.stringify(state.counterMap));
+    },
+    setCounterMap(state, map) {
+      state.counterMap = map;
+    },
     setSideList(state, list) {
       state.sideList = list;
     },
@@ -50,7 +71,7 @@ export default new Vuex.Store({
       this.commit('setGoodsType', type);
       const { list, total } = await api.getGoodsList(type, page, state.size, sortType);
       this.commit('setGoodsList', list);
-      console.log(list);
+      // console.log(list);
       if (total > state.goodsList.length) {
         return true;
       }
