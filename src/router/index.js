@@ -5,6 +5,11 @@ import Classify from '@/views/Classify.vue';
 import Shopping from '@/views/Shopping.vue';
 import Search from '@/views/Search.vue';
 
+VueRouter.prototype.back = false;
+VueRouter.prototype.goBack = function () {
+  this.back = true;
+  this.go(-1);
+};
 Vue.use(VueRouter);
 
 const routes = [
@@ -18,6 +23,7 @@ const routes = [
     children: [
       {
         path: 'classify',
+        name: 'classify',
         component: Classify,
       },
       {
@@ -28,6 +34,7 @@ const routes = [
   },
   {
     path: '/search',
+    name: 'search',
     component: Search,
   },
 ];

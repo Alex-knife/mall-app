@@ -13,7 +13,7 @@ export default new Vuex.Store({
     // 通过二级获取详情信息goodList
     goodsList: [],
     type: null,
-    // id：数量
+    // id：数量    存的值是cardList
     counterMap: {},
   },
   mutations: {
@@ -21,7 +21,7 @@ export default new Vuex.Store({
       // 先判断是否存在，无则加1
       if (state.counterMap[id]) {
         // 改变存储数值，减到0则删除
-        if (value === -1 && state.counterMap[id] === 1) {
+        if ((value === -1 && state.counterMap[id] === 1) || value === -Infinity) {
           Vue.delete(state.counterMap, id);
         } else {
           // vue.set(target, key, value)

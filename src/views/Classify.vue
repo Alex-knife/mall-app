@@ -18,19 +18,33 @@
 import TopTab from '@/components/TopTab.vue';
 import SideTab from '@/components/SideTab.vue';
 import GoodsList from '@/components/GoodsList.vue';
-import { mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default {
   computed: {
     // 获取state的值
     ...mapState({
       showContent: (state) => state.showContent,
+      sideList: (state) => state.sideList,
     }),
+  },
+  methods: {
+    ...mapMutations(['resetGoodsList']),
+    ...mapActions(['getGoodsList']),
   },
   components: {
     TopTab,
     SideTab,
     GoodsList,
+  },
+  // 监听 是否多次请求数据
+  watch: {
+    showContent() {
+      if (this.showContent) {
+        this.resetGoodsList();
+        this.getGoodsList({ type: this.sideList[0], page: 1, sortType: 'all' });
+      }
+    },
   },
 };
 </script>

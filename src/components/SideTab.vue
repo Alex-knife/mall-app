@@ -54,11 +54,11 @@ export default {
       this.getGoodsList({ type: this.sideList[i], page: 1, sortType: 'all' });
     },
   },
-  mounted() {
-    this.resetGoodsList();
-    // 挂载的时候，获取到是第一个的title
-    this.getGoodsList({ type: this.sideList[0], page: 1, sortType: 'all' });
-  },
+  // mounted() {
+  //   this.resetGoodsList();
+  //   // 挂载的时候，获取到是第一个的title
+  //   this.getGoodsList({ type: this.sideList[0], page: 1, sortType: 'all' });
+  // },
 };
 </script>
 

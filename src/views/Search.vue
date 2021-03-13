@@ -2,7 +2,7 @@
   <div class="search-wrapper">
     <!-- 头部框架 -->
     <div class="search-head">
-      <van-icon name="arrow-left" class="arrow-left" />
+      <van-icon name="arrow-left" class="arrow-left" @click="$router.goBack()"/>
       <van-search
         class="search-content"
         v-model="value"
@@ -23,6 +23,7 @@
               id="shop-cart"
               class="shop-cart"
               :badge="badge"
+              @click="$router.push('/home/shopping')"
             />
           </div>
         </template>
@@ -56,21 +57,29 @@
         <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
       </van-list>
     </div>
+    <div class="history" v-if="showList && likeList.length <= 0">
+      <my-history
+        :searchList="searchList"
+        @search="onSearch"
+      ></my-history>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import GoodsCard from '@/components/GoodsCard.vue';
+import MyHistory from '@/components/MyHistory.vue';
 
 export default {
   components: {
     GoodsCard,
+    MyHistory,
   },
   data() {
     return {
       value: this.word,
-      word: 'Apple',
+      word: '酒',
       likeList: [],
       // 防抖：操作完成后执行 在一定时间内
       timer: null,
@@ -83,7 +92,13 @@ export default {
       // 显示搜索结果 | 两种情况，模糊搜索结果，商品卡片信息
       showList: true,
       total: 0,
+      // 搜索记录
+      searchList: [],
     };
+  },
+  created() {
+    // 初始化获得searchList的值
+    this.searchList = JSON.parse(localStorage.getItem('searchList')) || [];
   },
   computed: {
     ...mapState({
@@ -122,6 +137,22 @@ export default {
       } else {
         this.value = this.word;
       }
+      const result = this.searchList.find((item) => item.value === this.value);
+      // searchList是否含值， 有的按时排序，没有的则推入，超出pop掉
+      if (result) {
+        result.time = new Date().getTime();
+        this.searchList.sort((a, b) => b.time - a.time);
+      } else {
+        this.searchList.unshift({
+          value: this.value,
+          time: new Date().getTime(),
+        });
+        if (this.searchList.length > 10) {
+          this.searchList.pop();
+        }
+      }
+      // 搜索后放入本地存储中
+      localStorage.setItem('searchList', JSON.stringify(this.searchList));
       this.likeList = [];
       this.goodsList = [];
       this.page = 1;
@@ -172,7 +203,7 @@ export default {
     margin: 0 auto;
     position: fixed;
     top: 0;
-    left: 13px;
+    left: 15px;
     z-index: 22;
     .arrow-left {
       font-size: 22px;
@@ -190,6 +221,7 @@ export default {
     width: 100%;
     padding-left: 30px;
     box-sizing: border-box;
+    // z-index: 10;
   }
   .goods-list {
     position: relative;
@@ -197,6 +229,13 @@ export default {
     margin: 48px auto 0;
     z-index: 10;
     background: #fff;
+  }
+  .history {
+    position: absolute;
+    top: 35px;
+    width: 350px;
+    left: 15px;
+    z-index: 1;
   }
 }
 </style>

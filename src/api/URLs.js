@@ -8,7 +8,7 @@ export const URLs = {
   // 搜索 请求方法： GET 请求路径：/search
   search: '/search',
   // 根据商品列表进行搜索 请求方法： GET 请求路径：/getGoodsByIds
-
+  getGoodsByIds: '/getGoodsByIds',
 };
 const baseURL = 'https://mallapi.duyiedu.com/goods/';
 export default baseURL;

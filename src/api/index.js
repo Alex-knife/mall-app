@@ -39,9 +39,15 @@ const search = (type, page, size) => request.get(
   { params: { type, page, size } },
 );
 
+const getGoodsByIds = (value) => request.get(
+  URLs.getGoodsByIds,
+  { params: { value } },
+);
+
 export default {
   getSideList,
   getGoodsList,
   likeSearch,
   search,
+  getGoodsByIds,
 };

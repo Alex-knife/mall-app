@@ -36,13 +36,16 @@ import Animate from '@/tools/animate';
 export default {
   // 每次父级组件发生变更时，子组件中所有的 prop 都将会刷新为最新的值
   //   num 存放在本地
-  props: ['images', 'title', 'desc', 'tags', 'price', 'id', 'num'],
+  props: ['images', 'title', 'desc', 'tags', 'price', 'id', 'num', 'nofly'],
   methods: {
     ...mapMutations(['storageChange']),
     counter(id, num) {
       // 获得本地存储
       this.storageChange({ id, value: num });
       if (num === -1) {
+        return;
+      }
+      if (this.nofly) {
         return;
       }
       // 图片 和 购物车 位置
