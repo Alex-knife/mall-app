@@ -1,9 +1,9 @@
 <template>
   <div class="classify-wrapper">
-    <div class="search-btn">
+    <router-link class="search-btn" tag="div" to="/search">
       <van-icon name="search" />
       <div>Search content</div>
-    </div>
+    </router-link>
     <top-tab></top-tab>
     <!-- 点击一级导航，会有加载圈 -->
     <template v-if="showContent">

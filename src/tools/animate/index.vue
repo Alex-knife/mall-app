@@ -17,7 +17,7 @@
 export default {};
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .item {
   position: fixed;
   z-index: 99;
@@ -25,9 +25,10 @@ export default {};
   left: 0;
   transition: all 1s;
   transform-origin: 0% 0%;
-}
-img {
+  img {
   width: 100%;
   border-radius: 50%;
 }
+}
+
 </style>
