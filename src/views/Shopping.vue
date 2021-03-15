@@ -19,7 +19,7 @@
     </div>
     <van-submit-bar
       :price="allMoney"
-      :button-text="`结算(￥${totalNum})`"
+      :button-text="`结算(${totalNum})`"
       @submit="onSubmit"
     >
       <van-checkbox v-model="checked" @click="checkAll">全选</van-checkbox>

@@ -131,7 +131,7 @@ export default {
         this.page += 1;
       }
     },
-    onSearch(value) {
+    async onSearch(value) {
       if (value) {
         this.value = value;
       } else {
